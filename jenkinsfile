@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+
+  agent any
 
     stages {
 
@@ -9,8 +10,8 @@ pipeline {
 		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'b6166a24-55a9-4fec-bcd4-5ff8a46f08b1', url: 'https://github.com/Amardeep51/calculator_flask.git']]])
                 bat 'python calculator.py'
                 echo "Compilation done successfully!"
-            }
-        }
+            	}
+           }
 
         
         stage('Testing Stage'){
@@ -18,15 +19,15 @@ pipeline {
                 echo "Entered Testing Stage"
                 bat 'python test_calculator.py'
                 echo "Unit Test done successfully!"
-            }
-        }
+            	}
+           }
 
         stage('Final Confirmation'){
                     steps{
                         echo "Entered Confirmation Stage"
                         bat 'python run_tests.py'
                         echo "That is the result of testing"
-                    }
+                    	}
                 }
 
         stage('Building Docker Image'){
@@ -34,25 +35,20 @@ pipeline {
                 echo "Building Docker Image"
                 bat 'docker image build -t calculator_flask .'
                 echo "Image Built Successfully"
-            }
-        }
-
-        stage('Stop previous containers') {
-                     steps {
-                         echo "Stopping Previous Containers"
-                         powershell 'docker stop $(docker ps -a -q)'
-                         powershell 'docker rm $(docker ps -q -f status=exited)'
-                         echo "Previous Containers Stopped"
-                           }
-                     }
+            	}
+             }
 
         stage('Running Docker Image'){
                     steps{
+			echo "Stopping Previous Containers"
+                        powershell 'docker stop $(docker ps -a -q)'
+                        powershell 'docker rm $(docker ps -q -f status=exited)'
+                        echo "Previous Containers Stopped"
                         echo "Runningg Docker Image"
                         bat 'docker run -p 5000:5000 -d calculator_flask'
                         echo "Image Ran Successfully"
-                    }
-                }
+                    	}
+                 }
 
 
         stage ('Deploying to DockerHub'){
