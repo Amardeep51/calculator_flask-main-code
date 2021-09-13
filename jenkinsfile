@@ -4,7 +4,7 @@ pipeline {
 
     stages {
 
-	stage('Checkout Stage'){
+	stage('Checkout Stage from GitHub'){
             steps{
                 echo "Pipeline Started Successfully"
 		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'b6166a24-55a9-4fec-bcd4-5ff8a46f08b1', url: 'https://github.com/Amardeep51/calculator_flask.git']]])
@@ -19,16 +19,12 @@ pipeline {
                 echo "Entered Testing Stage"
                 bat 'python test_calculator.py'
                 echo "Unit Test done successfully!"
+		echo "Entered Confirmation Stage"
+                bat 'python run_tests.py'
+                echo "That is the result of testing"
             	}
            }
 
-        stage('Final Confirmation'){
-                    steps{
-                        echo "Entered Confirmation Stage"
-                        bat 'python run_tests.py'
-                        echo "That is the result of testing"
-                    	}
-                }
 
         stage('Building Docker Image'){
             steps{
