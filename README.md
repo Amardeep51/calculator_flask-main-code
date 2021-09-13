@@ -1,2 +1,2 @@
 # calculator_flask-main-code
-Calculator Flask pipeline main source code, that is going to be tested using the rest of the codes using calculator_flask repo.
+This is the Jenkins file of the Web Application I have designed Using Flask, HTML, CSS to implement a Calculator. The other Source files are present in the Calculator_flask repository and in the Jenkins while testing that repository will be checked out and This repository will be run as main working file. After that, the Web Application Image will be deployed in DockerHub and We can run it in our localhost using "localhost:5000".
