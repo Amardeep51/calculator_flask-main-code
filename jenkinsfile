@@ -1,12 +1,18 @@
 pipeline {
-    agent any
+    agent {
+	node {
+      label 'my-defined-label'
+      customWorkspace 'C:\Users\Acer\Dropbox\My PC (LAPTOP-7TMKAO07)\Desktop\jenkins\jenkinshome\workspace\CICD FLASK PIPELINE'
+    	}
+
+	}
 
     stages {
 
 	stage('Checkout Stage'){
             steps{
                 echo "Pipeline Started Successfully"
-		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'b6166a24-55a9-4fec-bcd4-5ff8a46f08b1', url: 'https://github.com/Amardeep51/calculator_flask-main-code.git']]])
+		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'b6166a24-55a9-4fec-bcd4-5ff8a46f08b1', url: 'https://github.com/Amardeep51/calculator_flask.git']]])
                 bat 'python calculator.py'
                 echo "Compilation done successfully!"
             }
@@ -15,7 +21,6 @@ pipeline {
         
         stage('Testing Stage'){
             steps{
-		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'b6166a24-55a9-4fec-bcd4-5ff8a46f08b1', url: 'https://github.com/Amardeep51/calculator_flask.git']]])
                 echo "Entered Testing Stage"
                 bat 'python test_calculator.py'
                 echo "Unit Test done successfully!"
