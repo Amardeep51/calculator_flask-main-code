@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-	node {
-      label 'my-defined-label'
-      customWorkspace 'C:\Users\Acer\Dropbox\My PC (LAPTOP-7TMKAO07)\Desktop\jenkins\jenkinshome\workspace\CICD FLASK PIPELINE'
-    	}
-
-	}
+    agent any
 
     stages {
 
