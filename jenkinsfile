@@ -67,8 +67,8 @@ pipeline {
                 powershell 'docker rmi $(docker images -f "dangling=true" -q) --force'
                 echo "Untagged Images Removed"
 		echo "Pipeline Terminated"
-            }
-        }
-      }
+            	}
+          }
+      
     }
 }
